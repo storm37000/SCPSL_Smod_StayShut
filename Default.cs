@@ -55,10 +55,13 @@ namespace Smod.TestPlugin
         public override void Register()
         {
             // Register Events
-            this.AddEventHandler(typeof(IEventHandlerRoundStart), new EventHandler(this), Priority.Highest);
-            this.AddEventHandler(typeof(IEventHandlerWarheadDetonate), new EventHandler(this), Priority.Highest);
-            this.AddEventHandler(typeof(IEventHandlerWarheadStartCountdown), new EventHandler(this), Priority.Highest);
-            this.AddEventHandler(typeof(IEventHandlerWarheadStopCountdown), new EventHandler(this), Priority.Highest);
+            EventHandler events = new EventHandler(this);
+            this.AddEventHandler(typeof(IEventHandlerRoundStart), events, Priority.Highest);
+            this.AddEventHandler(typeof(IEventHandlerWarheadDetonate), events, Priority.Highest);
+            this.AddEventHandler(typeof(IEventHandlerWarheadStartCountdown), events, Priority.Highest);
+            this.AddEventHandler(typeof(IEventHandlerWarheadStopCountdown), events, Priority.Highest);
+            this.AddConfig(new Smod2.Config.ConfigSetting("ss_nuke_destroy_doors", false, Smod2.Config.SettingType.BOOL, true, ""));
+            this.AddConfig(new Smod2.Config.ConfigSetting("ss_nuke_destroy_items", true, Smod2.Config.SettingType.BOOL, true, ""));
         }
     }
 }

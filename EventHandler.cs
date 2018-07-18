@@ -34,21 +34,27 @@ namespace Smod.TestPlugin
         public void OnDetonate()
         {
             ulck.Enabled = false;
-            foreach (Smod2.API.Door door in PluginManager.Manager.Server.Map.GetDoors())
+            if (plugin.GetConfigBool("ss_nuke_destroy_doors"))
             {
-                if(door.Position.y <= 900)
+                foreach (Smod2.API.Door door in PluginManager.Manager.Server.Map.GetDoors())
                 {
-                    door.Destroyed = true;
+                    if (door.Position.y <= 900)
+                    {
+                        door.Destroyed = true;
+                    }
                 }
             }
-            foreach (int ind in System.Enum.GetValues(typeof(ItemType)))
+            if (plugin.GetConfigBool("ss_nuke_destroy_items"))
             {
-                if (ind == -1) { continue; }
-                foreach (Item item in PluginManager.Manager.Server.Map.GetItems(((ItemType)ind), false))
+                foreach (int ind in System.Enum.GetValues(typeof(ItemType)))
                 {
-                    if(item.GetPosition().y <= 900)
+                    if (ind == -1) { continue; }
+                    foreach (Item item in PluginManager.Manager.Server.Map.GetItems(((ItemType)ind), false))
                     {
-                        item.Remove();
+                        if (item.GetPosition().y <= 900)
+                        {
+                            item.Remove();
+                        }
                     }
                 }
             }
