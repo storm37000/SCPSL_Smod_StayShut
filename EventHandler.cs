@@ -62,9 +62,12 @@ namespace Smod.TestPlugin
 
         public void OnRoundStart(RoundStartEvent ev)
         {
-            foreach (Smod2.API.Door door in ev.Server.Map.GetDoors())
+            if (plugin.GetConfigBool("ss_doors_stay_shut"))
             {
-                door.DontOpenOnWarhead = true;
+                foreach (Smod2.API.Door door in ev.Server.Map.GetDoors())
+                {
+                    door.DontOpenOnWarhead = true;
+                }
             }
         }
 
