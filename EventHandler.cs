@@ -27,7 +27,6 @@ namespace Smod.TestPlugin
                     door.Locked = false;
                 }
                 ulck.Enabled = false;
-                plugin.Info("unlocking doors");
             };
         }
 
@@ -66,14 +65,17 @@ namespace Smod.TestPlugin
             {
                 foreach (Smod2.API.Door door in ev.Server.Map.GetDoors())
                 {
-                    door.DontOpenOnWarhead = true;
+                    if (door.Name != "NUKE_SURFACE")
+                    {
+                        door.DontOpenOnWarhead = true;
+                    }
                 }
             }
         }
 
         public void OnStartCountdown(WarheadStartEvent ev)
         {
-            InitTimer(2);
+            //InitTimer(2);
         }
 
         public void OnStopCountdown(WarheadStopEvent ev)
