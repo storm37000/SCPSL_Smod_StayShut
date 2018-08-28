@@ -61,7 +61,7 @@ namespace Smod.TestPlugin
             this.AddEventHandler(typeof(IEventHandlerWarheadStartCountdown), events, Priority.Highest);
             this.AddEventHandler(typeof(IEventHandlerWarheadStopCountdown), events, Priority.Highest);
             this.AddConfig(new Smod2.Config.ConfigSetting("ss_nuke_destroy_doors", false, Smod2.Config.SettingType.BOOL, true, ""));
-            this.AddConfig(new Smod2.Config.ConfigSetting("ss_nuke_destroy_items", true, Smod2.Config.SettingType.BOOL, true, ""));
+//            this.AddConfig(new Smod2.Config.ConfigSetting("ss_nuke_destroy_items", true, Smod2.Config.SettingType.BOOL, true, ""));
             this.AddConfig(new Smod2.Config.ConfigSetting("ss_doors_stay_shut", true, Smod2.Config.SettingType.BOOL, true, ""));
         }
     }
