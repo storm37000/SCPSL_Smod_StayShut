@@ -82,5 +82,5 @@ namespace Smod.TestPlugin
 //        {
 //            ulck.Enabled = false;
 //        }
-//    }
+    }
 }
