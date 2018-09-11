@@ -63,12 +63,18 @@ namespace Smod.TestPlugin
         {
             if (plugin.GetConfigBool("ss_doors_stay_shut"))
             {
-                foreach (Smod2.API.Door door in ev.Server.Map.GetDoors())
+                if (!ConfigManager.Manager.Config.GetBoolValue("lock_gates_on_countdown", true))
                 {
-                    if (door.Name != "NUKE_SURFACE")
+                    foreach (Smod2.API.Door door in ev.Server.Map.GetDoors())
                     {
-                        door.DontOpenOnWarhead = true;
+                        if (door.Name != "NUKE_SURFACE")
+                        {
+                            door.DontOpenOnWarhead = true;
+                        }
                     }
+                } else
+                {
+                    plugin.Error("lock_gates_on_countdown MUST be set to false for this plugin to be able to work safely!");
                 }
             }
         }
