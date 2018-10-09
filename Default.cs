@@ -11,7 +11,7 @@ namespace Smod.TestPlugin
         name = "StayShut",
         description = "Keeps doors shut when nuke countdown starts",
         id = "s37k.stayshut",
-        version = "1.0.3",
+        version = "1.0.4",
         SmodMajor = 3,
         SmodMinor = 1,
         SmodRevision = 0
@@ -61,12 +61,15 @@ namespace Smod.TestPlugin
             EventHandler events = new EventHandler(this);
             this.AddEventHandler(typeof(IEventHandlerRoundStart), events, Priority.Highest);
             this.AddEventHandler(typeof(IEventHandlerWarheadDetonate), events, Priority.Highest);
-            this.AddEventHandler(typeof(IEventHandlerWarheadStartCountdown), events, Priority.Highest);
-            this.AddEventHandler(typeof(IEventHandlerWarheadStopCountdown), events, Priority.Highest);
+			this.AddEventHandler(typeof(IEventHandlerDoorAccess), events, Priority.Highest);
+//            this.AddEventHandler(typeof(IEventHandlerWarheadStartCountdown), events, Priority.Highest);
+//            this.AddEventHandler(typeof(IEventHandlerWarheadStopCountdown), events, Priority.Highest);
             this.AddConfig(new Smod2.Config.ConfigSetting("ss_nuke_destroy_doors", false, Smod2.Config.SettingType.BOOL, true, ""));
 //            this.AddConfig(new Smod2.Config.ConfigSetting("ss_nuke_destroy_items", true, Smod2.Config.SettingType.BOOL, true, ""));
             this.AddConfig(new Smod2.Config.ConfigSetting("ss_doors_stay_shut", true, Smod2.Config.SettingType.BOOL, true, ""));
-            if (ConfigManager.Manager.Config.GetBoolValue("lock_gates_on_countdown", true))
+			this.AddConfig(new Smod2.Config.ConfigSetting("ss_autoshut_time", 0, Smod2.Config.SettingType.NUMERIC, true, ""));
+			this.AddConfig(new Smod2.Config.ConfigSetting("ss_autoshut_doors", new string[]{"GATE_A","GATE_B"}, Smod2.Config.SettingType.LIST, true, ""));
+			if (ConfigManager.Manager.Config.GetBoolValue("lock_gates_on_countdown", true))
             {
                 this.Error("lock_gates_on_countdown MUST be set to false for this plugin to be able to work safely!");
             }

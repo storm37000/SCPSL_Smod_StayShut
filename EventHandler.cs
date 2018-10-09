@@ -1,13 +1,14 @@
 ﻿using Smod2;
-using Smod2.API;
 using Smod2.Events;
 using Smod2.EventHandlers;
+using System.Threading;
 
 namespace Smod.TestPlugin
 {
-    class EventHandler : IEventHandlerRoundStart, IEventHandlerWarheadDetonate//, IEventHandlerWarheadStopCountdown, IEventHandlerWarheadStartCountdown
-    {
+    class EventHandler : IEventHandlerRoundStart, IEventHandlerWarheadDetonate, IEventHandlerDoorAccess//, IEventHandlerWarheadStopCountdown, IEventHandlerWarheadStartCountdown
+	{
         private Plugin plugin;
+		private bool safe = true;
 
         public EventHandler(Plugin plugin)
         {
@@ -59,7 +60,19 @@ namespace Smod.TestPlugin
 //            }
         }
 
-        public void OnRoundStart(RoundStartEvent ev)
+		public void OnDoorAccess(PlayerDoorAccessEvent ev)
+		{
+			if (safe && ev.Door.Open == false && plugin.GetConfigInt("ss_autoshut_time") != 0)
+			{
+				if (System.Array.IndexOf(plugin.GetConfigList("ss_autoshut_doors"),ev.Door.Name) !=-1)
+				{
+					Thread doorautoshutthread = new Thread(new ThreadStart(() => new doorautoshutthread(this.plugin, ev.Door, plugin.GetConfigInt("ss_autoshut_time"))));
+					doorautoshutthread.Start();
+				}
+			}
+		}
+
+		public void OnRoundStart(RoundStartEvent ev)
         {
             if (plugin.GetConfigBool("ss_doors_stay_shut"))
             {
@@ -74,6 +87,7 @@ namespace Smod.TestPlugin
                     }
                 } else
                 {
+					safe = false;
                     plugin.Error("lock_gates_on_countdown MUST be set to false for this plugin to be able to work safely!");
                 }
             }
