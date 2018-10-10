@@ -66,7 +66,7 @@ namespace Smod.TestPlugin
 			{
 				if (System.Array.IndexOf(plugin.GetConfigList("ss_autoshut_doors"),ev.Door.Name) !=-1)
 				{
-					Thread doorautoshutthread = new Thread(new ThreadStart(() => new doorautoshutthread(this.plugin, ev.Door, plugin.GetConfigInt("ss_autoshut_time"))));
+					Thread doorautoshutthread = new Thread(new ThreadStart(() => new doorautoshutthread(this.plugin, ev.Door, plugin.GetConfigInt("ss_autoshut_time")*1000)));
 					doorautoshutthread.Start();
 				}
 			}
