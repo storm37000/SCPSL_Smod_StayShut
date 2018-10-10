@@ -10,8 +10,15 @@ namespace Smod.TestPlugin
             Thread.Sleep(time);
 			if (door.Destroyed == false && door.Locked == false && door.Open == true)
 			{
-				door.Open = false;
-				plugin.Info("Closing door!");
+                plugin.Info("Closing door!");
+                foreach (Door d in UnityEngine.Object.FindObjectsOfType<Door>())
+                {
+                    if (d.DoorName == door.Name && d.isOpen)
+                    {
+                        d.ChangeState(false);
+                        break;
+                    }
+                }
 			}
         }
     }
