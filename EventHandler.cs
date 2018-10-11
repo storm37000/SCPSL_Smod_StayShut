@@ -62,7 +62,7 @@ namespace Smod.TestPlugin
 
 		public void OnDoorAccess(PlayerDoorAccessEvent ev)
 		{
-			if (Smod2.PluginManager.SMOD_MAJOR == 3 && Smod2.PluginManager.SMOD_MINOR == 1 && Smod2.PluginManager.SMOD_MINOR == 18 && Smod2.PluginManager.SMOD_BUILD == "A")
+			if (Smod2.PluginManager.SMOD_MAJOR == 3 && Smod2.PluginManager.SMOD_MINOR == 1 && Smod2.PluginManager.SMOD_REVISION == 18 && Smod2.PluginManager.SMOD_BUILD == "A")
 			{
 				if (plugin.GetConfigInt("ss_autoshut_time") != 0 && ev.Door.Open == false && System.Array.IndexOf(plugin.GetConfigList("ss_autoshut_doors"),ev.Door.Name) !=-1)
 				{
