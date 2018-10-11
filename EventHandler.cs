@@ -62,13 +62,16 @@ namespace Smod.TestPlugin
 
 		public void OnDoorAccess(PlayerDoorAccessEvent ev)
 		{
-			if (safe && ev.Door.Open == false && plugin.GetConfigInt("ss_autoshut_time") != 0)
+			if (Smod2.PluginManager.SMOD_MAJOR == 3 && Smod2.PluginManager.SMOD_MINOR == 1 && Smod2.PluginManager.SMOD_MINOR == 18 && Smod2.PluginManager.SMOD_BUILD == "A")
 			{
-				if (System.Array.IndexOf(plugin.GetConfigList("ss_autoshut_doors"),ev.Door.Name) !=-1)
+				if (plugin.GetConfigInt("ss_autoshut_time") != 0 && ev.Door.Open == false && System.Array.IndexOf(plugin.GetConfigList("ss_autoshut_doors"),ev.Door.Name) !=-1)
 				{
 					Thread doorautoshutthread = new Thread(new ThreadStart(() => new doorautoshutthread(this.plugin, ev.Door, plugin.GetConfigInt("ss_autoshut_time")*1000)));
 					doorautoshutthread.Start();
 				}
+			} else
+			{
+				plugin.Error("You have attempted to use ss_autoshut_time but your Smod is out of date!  It is required to have at least version 3.1.18-B");
 			}
 		}
 
@@ -88,7 +91,7 @@ namespace Smod.TestPlugin
                 } else
                 {
 					safe = false;
-                    plugin.Error("lock_gates_on_countdown MUST be set to false for this plugin to be able to work safely!");
+                    plugin.Error("'lock_gates_on_countdown: false' MUST be in your config for this plugin to be able to work safely!");
                 }
             }
         }
