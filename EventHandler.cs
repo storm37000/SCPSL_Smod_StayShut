@@ -62,16 +62,16 @@ namespace Smod.TestPlugin
 
 		public void OnDoorAccess(PlayerDoorAccessEvent ev)
 		{
-			if (Smod2.PluginManager.SMOD_MAJOR == 3 && Smod2.PluginManager.SMOD_MINOR == 1 && Smod2.PluginManager.SMOD_REVISION == 18 && Smod2.PluginManager.SMOD_BUILD == "A")
+			if (plugin.GetConfigInt("ss_autoshut_time") != 0 && ev.Door.Open == false && System.Array.IndexOf(plugin.GetConfigList("ss_autoshut_doors"),ev.Door.Name) !=-1)
 			{
-				if (plugin.GetConfigInt("ss_autoshut_time") != 0 && ev.Door.Open == false && System.Array.IndexOf(plugin.GetConfigList("ss_autoshut_doors"),ev.Door.Name) !=-1)
+				if (Smod2.PluginManager.SMOD_MAJOR == 3 && Smod2.PluginManager.SMOD_MINOR == 1 && Smod2.PluginManager.SMOD_REVISION == 18 && Smod2.PluginManager.SMOD_BUILD == "A")
 				{
-					Thread doorautoshutthread = new Thread(new ThreadStart(() => new doorautoshutthread(this.plugin, ev.Door, plugin.GetConfigInt("ss_autoshut_time")*1000)));
+					Thread doorautoshutthread = new Thread(new ThreadStart(() => new doorautoshutthread(this.plugin, ev.Door, plugin.GetConfigInt("ss_autoshut_time") * 1000)));
 					doorautoshutthread.Start();
+				} else
+				{
+					plugin.Error("You have attempted to use ss_autoshut_time but your Smod is out of date!  It is required to have at least version 3.1.18-B");
 				}
-			} else
-			{
-				plugin.Error("You have attempted to use ss_autoshut_time but your Smod is out of date!  It is required to have at least version 3.1.18-B");
 			}
 		}
 
