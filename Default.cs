@@ -11,7 +11,7 @@ namespace Smod.TestPlugin
         name = "StayShut",
         description = "Keeps doors shut when nuke countdown starts",
         id = "s37k.stayshut",
-        version = "1.0.4",
+        version = "1.0.5",
         SmodMajor = 3,
         SmodMinor = 1,
         SmodRevision = 0
