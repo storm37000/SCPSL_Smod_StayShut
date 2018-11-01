@@ -1,9 +1,9 @@
-﻿using Smod2;
+using Smod2;
 using Smod2.Events;
 using Smod2.EventHandlers;
 using System.Threading;
 
-namespace Smod.TestPlugin
+namespace StayShut
 {
     class EventHandler : IEventHandlerRoundStart, IEventHandlerWarheadDetonate, IEventHandlerDoorAccess//, IEventHandlerWarheadStopCountdown, IEventHandlerWarheadStartCountdown
 	{
