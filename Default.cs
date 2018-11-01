@@ -4,7 +4,7 @@ using Smod2.Events;
 using Smod2.EventHandlers;
 using System;
 
-namespace Smod.TestPlugin
+namespace StayShut
 {
     [PluginDetails(
         author = "storm37000",
@@ -14,9 +14,9 @@ namespace Smod.TestPlugin
         version = "1.0.5",
         SmodMajor = 3,
         SmodMinor = 1,
-        SmodRevision = 0
+        SmodRevision = 21
         )]
-    class Default : Plugin
+    class StayShutPlugin : Plugin
     {
         public override void OnDisable()
         {
