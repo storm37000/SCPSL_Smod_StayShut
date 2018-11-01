@@ -1,7 +1,8 @@
 ﻿using System.Threading;
 
-namespace Smod.TestPlugin
+namespace StayShut
 {
+	// These should be DoorAutoShutThread
     class doorautoshutthread
     {
         public doorautoshutthread(Smod2.Plugin plugin, Smod2.API.Door door, int time)
