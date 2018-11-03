@@ -4,7 +4,7 @@ using Smod2.Events;
 using Smod2.EventHandlers;
 using System;
 
-namespace Smod.TestPlugin
+namespace StayShut
 {
     [PluginDetails(
         author = "storm37000",
@@ -16,7 +16,7 @@ namespace Smod.TestPlugin
         SmodMinor = 1,
         SmodRevision = 0
         )]
-    class Default : Plugin
+    class Main : Plugin
     {
         public override void OnDisable()
         {
@@ -24,34 +24,37 @@ namespace Smod.TestPlugin
         }
 		public override void OnEnable()
 		{
-			bool SSLerr = false;
 			this.Info(this.Details.name + " has been enabled.");
-			string hostfile = "http://pastebin.com/raw/9VQi53JQ";
-			string[] hosts = new System.Net.WebClient().DownloadString(hostfile).Split('\n');
-			while (true)
+			string[] hosts = { "https://storm37k.com/addons/", "http://74.91.115.126/addons/" };
+			ushort version = ushort.Parse(this.Details.version.Replace(".", string.Empty));
+			bool fail = true;
+			string errorMSG = "";
+			foreach (string host in hosts)
 			{
-				try
+				using (UnityEngine.WWW req = new UnityEngine.WWW(host + this.Details.name + ".ver"))
 				{
-					string host = hosts[0];
-					if (SSLerr) { host = hosts[1]; }
-					ushort version = ushort.Parse(this.Details.version.Replace(".", string.Empty));
-					ushort fileContentV = ushort.Parse(new System.Net.WebClient().DownloadString(host + this.Details.name + ".ver"));
-					if (fileContentV > version)
+					while (!req.isDone) { }
+					errorMSG = req.error;
+					if (string.IsNullOrEmpty(req.error))
 					{
-						this.Info("Your version is out of date, please visit the Smod discord and download the newest version");
+						ushort fileContentV = 0;
+						if (!ushort.TryParse(req.text, out fileContentV))
+						{
+							errorMSG = "Parse Failure";
+							continue;
+						}
+						if (fileContentV > version)
+						{
+							this.Error("Your version is out of date, please visit the Smod discord and download the newest version");
+						}
+						fail = false;
+						break;
 					}
-					break;
 				}
-				catch (System.Exception e)
-				{
-					if (SSLerr == false)
-					{
-						SSLerr = true;
-						continue;
-					}
-					this.Error("Could not fetch latest version txt: " + e.Message);
-					break;
-				}
+			}
+			if (fail)
+			{
+				this.Error("Could not fetch latest version txt: " + errorMSG);
 			}
 		}
 

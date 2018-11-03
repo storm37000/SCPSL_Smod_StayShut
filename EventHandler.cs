@@ -2,18 +2,20 @@
 using Smod2.Events;
 using Smod2.EventHandlers;
 using System.Threading;
+using System.Collections.Generic;
 
-namespace Smod.TestPlugin
+namespace StayShut
 {
     class EventHandler : IEventHandlerRoundStart, IEventHandlerWarheadDetonate, IEventHandlerDoorAccess//, IEventHandlerWarheadStopCountdown, IEventHandlerWarheadStartCountdown
 	{
-        private Plugin plugin;
+        private Main plugin;
+		private List<System.Timers.Timer> doortims = new List<System.Timers.Timer>();
 		private bool safe = true;
 
-        public EventHandler(Plugin plugin)
+        public EventHandler(Main plugin)
         {
             this.plugin = plugin;
-        }
+		}
 
 //        private System.Timers.Timer ulck = new System.Timers.Timer();
 //        private void InitTimer(uint time)
@@ -64,14 +66,8 @@ namespace Smod.TestPlugin
 		{
 			if (plugin.GetConfigInt("ss_autoshut_time") != 0 && ev.Door.Open == false && System.Array.IndexOf(plugin.GetConfigList("ss_autoshut_doors"),ev.Door.Name) !=-1)
 			{
-				if (!(Smod2.PluginManager.SMOD_MAJOR == 3 && Smod2.PluginManager.SMOD_MINOR == 1 && Smod2.PluginManager.SMOD_REVISION == 18 && Smod2.PluginManager.SMOD_BUILD == "A"))
-				{
-					Thread doorautoshutthread = new Thread(new ThreadStart(() => new doorautoshutthread(this.plugin, ev.Door, plugin.GetConfigInt("ss_autoshut_time") * 1000)));
-					doorautoshutthread.Start();
-				} else
-				{
-					plugin.Error("You have attempted to use ss_autoshut_time but your Smod is out of date!  It is required to have at least version 3.1.18-B");
-				}
+				Thread doorautoshutthread = new Thread(new ThreadStart(() => new doorautoshutthread(this.plugin, ev.Door, plugin.GetConfigInt("ss_autoshut_time") * 1000)));
+				doorautoshutthread.Start();
 			}
 		}
 

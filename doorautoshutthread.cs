@@ -1,6 +1,6 @@
 ﻿using System.Threading;
 
-namespace Smod.TestPlugin
+namespace StayShut
 {
     class doorautoshutthread
     {
