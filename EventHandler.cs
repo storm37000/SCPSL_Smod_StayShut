@@ -2,14 +2,12 @@
 using Smod2.Events;
 using Smod2.EventHandlers;
 using System.Threading;
-using System.Collections.Generic;
 
 namespace StayShut
 {
     class EventHandler : IEventHandlerRoundStart, IEventHandlerWarheadDetonate, IEventHandlerDoorAccess//, IEventHandlerWarheadStopCountdown, IEventHandlerWarheadStartCountdown
 	{
         private Main plugin;
-		private List<System.Timers.Timer> doortims = new List<System.Timers.Timer>();
 		private bool safe = true;
 
         public EventHandler(Main plugin)

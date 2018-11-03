@@ -11,7 +11,7 @@ namespace StayShut
         name = "StayShut",
         description = "Keeps doors shut when nuke countdown starts",
         id = "s37k.stayshut",
-        version = "1.0.5",
+        version = "1.0.6",
         SmodMajor = 3,
         SmodMinor = 1,
         SmodRevision = 0
