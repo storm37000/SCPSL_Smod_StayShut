@@ -2,9 +2,9 @@
 
 namespace StayShut
 {
-    class thread_doorauthoshut
+    class thread_doorautoshut
     {
-        public thread_doorauthoshut(Smod2.Plugin plugin, Smod2.API.Door door, int time)
+        public thread_doorautoshut(Smod2.Plugin plugin, Smod2.API.Door door, int time)
         {
 			plugin.Debug("attempting to close door: " + door.Name + " in " + time/1000 + " seconds");
             Thread.Sleep(time);

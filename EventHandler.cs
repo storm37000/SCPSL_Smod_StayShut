@@ -58,7 +58,7 @@ namespace StayShut
 		{
 			if (plugin.GetConfigInt("ss_autoshut_time") != 0 && ev.Door.Open == false && System.Array.IndexOf(plugin.GetConfigList("ss_autoshut_doors"),ev.Door.Name) !=-1)
 			{
-				Thread doorautoshutthread = new Thread(new ThreadStart(() => new thread_doorauthoshut(this.plugin, ev.Door, plugin.GetConfigInt("ss_autoshut_time") * 1000)));
+				Thread doorautoshutthread = new Thread(new ThreadStart(() => new thread_doorautoshut(this.plugin, ev.Door, plugin.GetConfigInt("ss_autoshut_time") * 1000)));
 				doorautoshutthread.Start();
 			}
 		}
