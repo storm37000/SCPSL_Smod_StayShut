@@ -36,14 +36,8 @@ namespace StayShut
 //            ulck.Enabled = false;
             if (plugin.GetConfigBool("ss_nuke_destroy_doors"))
             {
-                foreach (Smod2.API.Door door in PluginManager.Manager.Server.Map.GetDoors())
-                {
-                    if (door.Position.y <= 900)
-                    {
-                        door.Destroyed = true;
-                    }
-                }
-            }
+				Thread doorautoshutthread = new Thread(new ThreadStart(() => new thread_blowalldoors()));
+			}
 //            if (plugin.GetConfigBool("ss_nuke_destroy_items"))
 //            {
 //                foreach (int ind in System.Enum.GetValues(typeof(ItemType)))
@@ -64,7 +58,7 @@ namespace StayShut
 		{
 			if (plugin.GetConfigInt("ss_autoshut_time") != 0 && ev.Door.Open == false && System.Array.IndexOf(plugin.GetConfigList("ss_autoshut_doors"),ev.Door.Name) !=-1)
 			{
-				Thread doorautoshutthread = new Thread(new ThreadStart(() => new doorautoshutthread(this.plugin, ev.Door, plugin.GetConfigInt("ss_autoshut_time") * 1000)));
+				Thread doorautoshutthread = new Thread(new ThreadStart(() => new thread_doorauthoshut(this.plugin, ev.Door, plugin.GetConfigInt("ss_autoshut_time") * 1000)));
 				doorautoshutthread.Start();
 			}
 		}
