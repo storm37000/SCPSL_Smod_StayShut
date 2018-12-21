@@ -13,7 +13,7 @@ namespace StayShut
         version = "1.0.7",
         SmodMajor = 3,
         SmodMinor = 1,
-        SmodRevision = 0
+        SmodRevision = 19
         )]
     class Main : Plugin
     {
