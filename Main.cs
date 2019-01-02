@@ -5,22 +5,22 @@ using Smod2.EventHandlers;
 
 namespace StayShut
 {
-    [PluginDetails(
-        author = "storm37000",
-        name = "StayShut",
-        description = "Keeps doors shut when nuke countdown starts",
-        id = "s37k.stayshut",
-        version = "1.0.7",
-        SmodMajor = 3,
-        SmodMinor = 1,
-        SmodRevision = 19
-        )]
-    class Main : Plugin
-    {
-        public override void OnDisable()
-        {
-            this.Info(this.Details.name + " has been disabled.");
-        }
+	[PluginDetails(
+		author = "storm37000",
+		name = "StayShut",
+		description = "Keeps doors shut when nuke countdown starts",
+		id = "s37k.stayshut",
+		version = "1.0.7",
+		SmodMajor = 3,
+		SmodMinor = 1,
+		SmodRevision = 19
+		)]
+	class Main : Plugin
+	{
+		public override void OnDisable()
+		{
+			this.Info(this.Details.name + " has been disabled.");
+		}
 		public override void OnEnable()
 		{
 			this.Info(this.Details.name + " has been enabled.");
@@ -58,11 +58,11 @@ namespace StayShut
 		}
 
 		public override void Register()
-        {
-            // Register Events
-            EventHandler events = new EventHandler(this);
-            this.AddEventHandler(typeof(IEventHandlerRoundStart), events, Priority.Highest);
-            this.AddEventHandler(typeof(IEventHandlerWarheadDetonate), events, Priority.Highest);
+		{
+			// Register Events
+			EventHandler events = new EventHandler(this);
+			this.AddEventHandler(typeof(IEventHandlerRoundStart), events, Priority.Highest);
+			this.AddEventHandler(typeof(IEventHandlerWarheadDetonate), events, Priority.Highest);
 			this.AddEventHandler(typeof(IEventHandlerDoorAccess), events, Priority.Highest);
 //			this.AddEventHandler(typeof(IEventHandlerWarheadStartCountdown), events, Priority.Highest);
 //			this.AddEventHandler(typeof(IEventHandlerWarheadStopCountdown), events, Priority.Highest);
@@ -77,5 +77,5 @@ namespace StayShut
 //				this.Error("lock_gates_on_countdown MUST be set to false for this plugin to be able to work safely!");
 //			}
 		}
-    }
+	}
 }

@@ -5,13 +5,13 @@ using System.Threading;
 
 namespace StayShut
 {
-    class EventHandler : IEventHandlerWarheadDetonate, IEventHandlerDoorAccess//, IEventHandlerWarheadStopCountdown, IEventHandlerWarheadStartCountdown, IEventHandlerRoundStart
+	class EventHandler : IEventHandlerWarheadDetonate, IEventHandlerDoorAccess//, IEventHandlerWarheadStopCountdown, IEventHandlerWarheadStartCountdown, IEventHandlerRoundStart
 	{
-        private Main plugin;
+		private Main plugin;
 
-        public EventHandler(Main plugin)
-        {
-            this.plugin = plugin;
+		public EventHandler(Main plugin)
+		{
+			this.plugin = plugin;
 		}
 
 //        private System.Timers.Timer ulck = new System.Timers.Timer();
@@ -30,11 +30,11 @@ namespace StayShut
 //            };
 //        }
 
-        public void OnDetonate()
-        {
+		public void OnDetonate()
+		{
 //            ulck.Enabled = false;
-            if (plugin.GetConfigBool("ss_nuke_destroy_doors"))
-            {
+			if (plugin.GetConfigBool("ss_nuke_destroy_doors"))
+			{
 				Thread doorautoshutthread = new Thread(new ThreadStart(() => new thread_blowalldoors()));
 			}
 //            if (plugin.GetConfigBool("ss_nuke_destroy_items"))
@@ -51,7 +51,7 @@ namespace StayShut
 //                    }
 //                }
 //            }
-        }
+		}
 
 		public void OnDoorAccess(PlayerDoorAccessEvent ev)
 		{
@@ -89,12 +89,12 @@ namespace StayShut
 
 //        public void OnStartCountdown(WarheadStartEvent ev)
 //        {
-            //InitTimer(2);
+			//InitTimer(2);
 //        }
 
 //        public void OnStopCountdown(WarheadStopEvent ev)
 //        {
 //            ulck.Enabled = false;
 //        }
-    }
+	}
 }
