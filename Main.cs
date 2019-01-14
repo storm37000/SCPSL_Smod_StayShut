@@ -1,7 +1,5 @@
 ﻿using Smod2;
 using Smod2.Attributes;
-using Smod2.Events;
-using Smod2.EventHandlers;
 
 namespace StayShut
 {
@@ -60,13 +58,7 @@ namespace StayShut
 		public override void Register()
 		{
 			// Register Events
-			EventHandler events = new EventHandler(this);
-			this.AddEventHandler(typeof(IEventHandlerRoundStart), events, Priority.Highest);
-			this.AddEventHandler(typeof(IEventHandlerWarheadDetonate), events, Priority.Highest);
-			this.AddEventHandler(typeof(IEventHandlerDoorAccess), events, Priority.Highest);
-//			this.AddEventHandler(typeof(IEventHandlerWarheadStartCountdown), events, Priority.Highest);
-//			this.AddEventHandler(typeof(IEventHandlerWarheadStopCountdown), events, Priority.Highest);
-//			this.AddConfig(new Smod2.Config.ConfigSetting("ss_doors_stay_shut", true, Smod2.Config.SettingType.BOOL, true, ""));
+			this.AddEventHandlers(new EventHandler(this));
 			this.AddConfig(new Smod2.Config.ConfigSetting("ss_nuke_destroy_doors", false, Smod2.Config.SettingType.BOOL, true, ""));
 //			this.AddConfig(new Smod2.Config.ConfigSetting("ss_nuke_destroy_items", true, Smod2.Config.SettingType.BOOL, true, ""));
 			this.AddConfig(new Smod2.Config.ConfigSetting("ss_autoshut_time", 0, Smod2.Config.SettingType.NUMERIC, true, ""));
