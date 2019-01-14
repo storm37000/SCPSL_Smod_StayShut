@@ -8,10 +8,10 @@ namespace StayShut
 		name = "StayShut",
 		description = "Keeps doors shut when nuke countdown starts",
 		id = "s37k.stayshut",
-		version = "1.0.7",
+		version = "1.0.8",
 		SmodMajor = 3,
-		SmodMinor = 1,
-		SmodRevision = 19
+		SmodMinor = 2,
+		SmodRevision = 0
 		)]
 	class Main : Plugin
 	{
