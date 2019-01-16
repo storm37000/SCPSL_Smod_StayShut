@@ -6,9 +6,9 @@ namespace StayShut
 	[PluginDetails(
 		author = "storm37000",
 		name = "StayShut",
-		description = "Keeps doors shut when nuke countdown starts",
+		description = "Keeps the doors you want to be shut, shut (after a configurable time).",
 		id = "s37k.stayshut",
-		version = "1.0.8",
+		version = "1.0.9",
 		SmodMajor = 3,
 		SmodMinor = 2,
 		SmodRevision = 0

@@ -4,9 +4,12 @@ using System.Threading;
 
 namespace StayShut
 {
-	class EventHandler : IEventHandlerWarheadDetonate, IEventHandlerDoorAccess//, IEventHandlerWarheadStopCountdown, IEventHandlerWarheadStartCountdown, IEventHandlerRoundStart
+	class EventHandler : IEventHandlerWarheadDetonate, IEventHandlerDoorAccess, IEventHandlerWaitingForPlayers//, IEventHandlerWarheadStopCountdown, IEventHandlerWarheadStartCountdown, IEventHandlerRoundStart
 	{
 		private Main plugin;
+		private int autoshuttime;
+		string[] doorlist;
+		string[] scp079blklst;
 
 		public EventHandler(Main plugin)
 		{
@@ -28,6 +31,13 @@ namespace StayShut
 //                ulck.Enabled = false;
 //            };
 //        }
+
+		public void OnWaitingForPlayers(WaitingForPlayersEvent ev)
+		{
+			autoshuttime = plugin.GetConfigInt("ss_autoshut_time");
+			doorlist = plugin.GetConfigList("ss_autoshut_doors");
+			scp079blklst = plugin.GetConfigList("ss_079_blacklist_doors");
+		}
 
 		public void OnDetonate()
 		{
@@ -54,46 +64,46 @@ namespace StayShut
 
 		public void OnDoorAccess(PlayerDoorAccessEvent ev)
 		{
-			if (ev.Door.Open == false && plugin.GetConfigInt("ss_autoshut_time") != 0 && System.Array.IndexOf(plugin.GetConfigList("ss_autoshut_doors"),ev.Door.Name) !=-1)
+			if (ev.Door.Open == false && autoshuttime != 0 && System.Array.IndexOf(doorlist, ev.Door.Name) !=-1)
 			{
-				Thread doorautoshutthread = new Thread(new ThreadStart(() => new thread_doorautoshut(this.plugin, ev.Door, plugin.GetConfigInt("ss_autoshut_time") * 1000)));
+				Thread doorautoshutthread = new Thread(new ThreadStart(() => new thread_doorautoshut(this.plugin, ev.Door, autoshuttime * 1000)));
 				doorautoshutthread.Start();
 			}
-			if (ev.Door.Open == false && ev.Player.TeamRole.Role == Smod2.API.Role.SCP_079 && System.Array.IndexOf(plugin.GetConfigList("ss_079_blacklist_doors"), ev.Door.Name) != -1)
+			if (ev.Door.Open == false && ev.Player.TeamRole.Role == Smod2.API.Role.SCP_079 && System.Array.IndexOf(scp079blklst, ev.Door.Name) != -1)
 			{
 				ev.Allow = false;
 			}
 		}
 
-//		public void OnRoundStart(RoundStartEvent ev)
-//        {
-//            if (plugin.GetConfigBool("ss_doors_stay_shut"))
-//            {
-//                if (!ConfigManager.Manager.Config.GetBoolValue("lock_gates_on_countdown", true))
-//                {
-//                    foreach (Smod2.API.Door door in ev.Server.Map.GetDoors())
-//                    {
-//                        if (door.Name != "NUKE_SURFACE")
-//                        {
-//                            door.DontOpenOnWarhead = true;
-//                        }
-//                    }
-//                } else
-//                {
-//					safe = false;
-//                    plugin.Error("'lock_gates_on_countdown: false' MUST be in your config for this plugin to be able to work safely!");
-//                }
-//            }
-//        }
+		//		public void OnRoundStart(RoundStartEvent ev)
+		//        {
+		//            if (plugin.GetConfigBool("ss_doors_stay_shut"))
+		//            {
+		//                if (!ConfigManager.Manager.Config.GetBoolValue("lock_gates_on_countdown", true))
+		//                {
+		//                    foreach (Smod2.API.Door door in ev.Server.Map.GetDoors())
+		//                    {
+		//                        if (door.Name != "NUKE_SURFACE")
+		//                        {
+		//                            door.DontOpenOnWarhead = true;
+		//                        }
+		//                    }
+		//                } else
+		//                {
+		//					safe = false;
+		//                    plugin.Error("'lock_gates_on_countdown: false' MUST be in your config for this plugin to be able to work safely!");
+		//                }
+		//            }
+		//        }
 
-//        public void OnStartCountdown(WarheadStartEvent ev)
-//        {
-			//InitTimer(2);
-//        }
+		//        public void OnStartCountdown(WarheadStartEvent ev)
+		//        {
+		//InitTimer(2);
+		//        }
 
-//        public void OnStopCountdown(WarheadStopEvent ev)
-//        {
-//            ulck.Enabled = false;
-//        }
+		//        public void OnStopCountdown(WarheadStopEvent ev)
+		//        {
+		//            ulck.Enabled = false;
+		//        }
 	}
 }
