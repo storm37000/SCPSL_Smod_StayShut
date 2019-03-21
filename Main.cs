@@ -8,7 +8,7 @@ namespace StayShut
 		name = "StayShut",
 		description = "Keeps the doors you want to be shut, shut (after a configurable time).",
 		id = "s37k.stayshut",
-		version = "1.0.9",
+		version = "1.0.10",
 		SmodMajor = 3,
 		SmodMinor = 2,
 		SmodRevision = 0

@@ -1,10 +1,11 @@
 ﻿using Smod2.Events;
 using Smod2.EventHandlers;
-using System.Threading;
+using System.Collections.Generic;
+using MEC;
 
 namespace StayShut
 {
-	class EventHandler : IEventHandlerWarheadDetonate, IEventHandlerDoorAccess, IEventHandlerWaitingForPlayers//, IEventHandlerWarheadStopCountdown, IEventHandlerWarheadStartCountdown, IEventHandlerRoundStart
+	class EventHandler : IEventHandlerWarheadDetonate, IEventHandlerDoorAccess, IEventHandlerWaitingForPlayers, IEventHandler079Door, IEventHandler079Lock//, IEventHandlerWarheadStopCountdown, IEventHandlerWarheadStartCountdown, IEventHandlerRoundStart
 	{
 		private Main plugin;
 		private int autoshuttime;
@@ -44,7 +45,13 @@ namespace StayShut
 //            ulck.Enabled = false;
 			if (plugin.GetConfigBool("ss_nuke_destroy_doors"))
 			{
-				Thread doorautoshutthread = new Thread(new ThreadStart(() => new thread_blowalldoors()));
+				foreach (Smod2.API.Door door in Smod2.PluginManager.Manager.Server.Map.GetDoors())
+				{
+					if (door.Position.y <= 900)
+					{
+						door.Destroyed = true;
+					}
+				}
 			}
 //            if (plugin.GetConfigBool("ss_nuke_destroy_items"))
 //            {
@@ -62,16 +69,40 @@ namespace StayShut
 //            }
 		}
 
+		IEnumerator<float> doorAutoShut(Smod2.API.Door door)
+		{
+			plugin.Debug("attempting to close door: " + door.Name + " in " + autoshuttime + " seconds");
+			yield return Timing.WaitForSeconds(autoshuttime);
+			if (door.Destroyed == false && door.Locked == false && door.Open == true)
+			{
+				door.Open = false;
+				plugin.Debug("Closing door: " + door.Name);
+			}
+		}
+
 		public void OnDoorAccess(PlayerDoorAccessEvent ev)
 		{
 			if (ev.Door.Open == false && autoshuttime != 0 && System.Array.IndexOf(doorlist, ev.Door.Name) !=-1)
 			{
-				Thread doorautoshutthread = new Thread(new ThreadStart(() => new thread_doorautoshut(this.plugin, ev.Door, autoshuttime * 1000)));
-				doorautoshutthread.Start();
+				Timing.RunCoroutine(doorAutoShut(ev.Door), Segment.FixedUpdate);
 			}
-			if (ev.Door.Open == false && ev.Player.TeamRole.Role == Smod2.API.Role.SCP_079 && System.Array.IndexOf(scp079blklst, ev.Door.Name) != -1)
+		}
+
+		public void On079Door(Player079DoorEvent ev)
+		{
+			if (ev.Door.Open == false && System.Array.IndexOf(scp079blklst, ev.Door.Name) != -1)
 			{
 				ev.Allow = false;
+				ev.APDrain = 0;
+			}
+		}
+
+		public void On079Lock(Player079LockEvent ev)
+		{
+			if (System.Array.IndexOf(scp079blklst, ev.Door.Name) != -1)
+			{
+				ev.Allow = false;
+				ev.APDrain = 0;
 			}
 		}
 
