@@ -35,6 +35,11 @@ namespace StayShut
 
 		public void OnWaitingForPlayers(WaitingForPlayersEvent ev)
 		{
+			if (!plugin.UpToDate)
+			{
+				plugin.outdatedmsg();
+			}
+
 			autoshuttime = plugin.GetConfigInt("ss_autoshut_time");
 			doorlist = plugin.GetConfigList("ss_autoshut_doors");
 			scp079blklst = plugin.GetConfigList("ss_079_blacklist_doors");
